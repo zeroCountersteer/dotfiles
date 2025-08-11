@@ -29,7 +29,20 @@
       system = "x86_64-linux";
       hostname = "yuki-machine";
       username = "yuki";
-      extraModules = [ ];
+      extraModules = [
+        ./nix/modules/base.nix
+        ./nix/modules/gpu/M6500.nix
+      ];
+    };
+
+    nixosConfigurations.work-machine = mkSystem {
+      system = "x86_64-linux";
+      hostname = "work-machine";
+      username = "yuki";
+      extraModules = [
+        ./nix/modules/base.nix
+        ./nix/modules/gpu/WorkPC.nix
+      ];
     };
   };
 }

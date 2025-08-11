@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    PrismLauncher-Cracked.url = "github.com:Diegiwg/PrismLauncher-Cracked-Cracked";
+    PrismLauncher-Cracked.url = "github.com:Diegiwg/PrismLauncher-Cracked";
   };
 
   outputs = { self, nixpkgs, home-manager, PrismLauncher-Cracked, ... }:
