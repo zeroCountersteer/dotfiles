@@ -3,7 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/common.nix
-    ../../modules/gpu/m6500.nix
+    ../../modules/gpu/M6500.nix
   ];
 
   networking.hostName = "yuki-machine";

@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  imports = [ ./modules/arduino-libs.nix ];
+  imports = [ ../../modules/arduino-libs.nix ];
 
   home.username = "yuki";
   home.homeDirectory = "/home/yuki";
@@ -37,8 +37,6 @@
     };
   };
 
-  programs.thunderbird.enable = true;
-
   home.sessionVariables = {
     CC = "clang";
     CXX = "clang++";
@@ -54,6 +52,7 @@
     kdePackages.kate
     kdePackages.kiten
     qbittorrent
+    thunderbird
 
 #   EDA
     kicad
@@ -72,6 +71,7 @@
 #   CLI Tools
     ripgrep
     fd
+    fastfetch
 
 #   Java
     temurin-jre-bin-8
@@ -80,19 +80,13 @@
     temurin-jre-bin-21
 
 #   Embedded toolchain
-    arm-none-eabi-gcc
-    arm-none-eabi-binutils
-    arm-none-eabi-gdb
+    gcc-arm-embedded
     openocd
     stlink
     dfu-util
     arduino-cli
     stm32cubemx
     esptool
-    xtensa-esp32-elf
-    xtensa-esp32s2-elf
-    xtensa-esp32s3-elf
-    riscv32-esp-elf
 
 #   C/C++ toolchain
     gcc

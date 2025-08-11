@@ -10,8 +10,8 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     prime = {
       offload.enable = true;
-      amdgpuBusId = "PCI:4:0:0";
-      nvidiaBusId = "PCI:1:0:0";
+      amdgpuBusId = "PCI:04:00:0";
+      nvidiaBusId = "PCI:01:00:0";
     };
   };
 }
