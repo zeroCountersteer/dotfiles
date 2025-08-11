@@ -41,5 +41,8 @@
     thunderbird
     ripgrep
     fd
+    jdk17
+    jre8
+    PrismLauncher-Cracked
   ];
 }
