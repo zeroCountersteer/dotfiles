@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  imports = [ ../../modules/arduino-libs.nix ];
+  # imports = [ ../../modules/arduino-libs.nix ];
 
   home.username = "yuki";
   home.homeDirectory = "/home/yuki";
@@ -57,7 +57,6 @@
 #   EDA
     kicad
     kicadAddons.kikit
-    kicadAddons.kikit-library
     freerouting
     freecad
     diylc
@@ -66,7 +65,7 @@
     osu-lazer-bin
     steam
     retroarch-full
-    prismlauncher
+#     prismlauncher
 
 #   CLI Tools
     ripgrep
@@ -74,13 +73,13 @@
     fastfetch
 
 #   Java
-    temurin-jre-bin-8
-    temurin-jre-bin-11
-    temurin-jre-bin-17
-    temurin-jre-bin-21
+#    temurin-jre-bin-8
+#    temurin-jre-bin-11
+#    temurin-jre-bin-17
+#    temurin-jre-bin-21
 
 #   Embedded toolchain
-    gcc-arm-embedded
+#    gcc-arm-embedded
     openocd
     stlink
     dfu-util
@@ -90,8 +89,8 @@
 
 #   C/C++ toolchain
     gcc
-    clang
-    clang-tools
+#    clang
+#    clang-tools
     gdb
     lldb
     cmake
