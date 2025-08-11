@@ -9,6 +9,13 @@
   programs.home-manager.enable = true;
   programs.nushell.enable = true;
 
+  programs.nushell.extraConfig = ''
+    alias java8  = "${pkgs.temurin-jre-bin-8}/bin/java"
+    alias java11 = "${pkgs.temurin-jre-bin-11}/bin/java"
+    alias java17 = "${pkgs.temurin-jre-bin-17}/bin/java"
+    alias java21 = "${pkgs.temurin-jre-bin-21}/bin/java"
+  '';
+
   programs.alacritty = {
     enable = true;
     settings = {
@@ -35,6 +42,10 @@
   home.sessionVariables = {
     CC = "clang";
     CXX = "clang++";
+    JAVA8_HOME  = "${pkgs.temurin-jre-bin-8}";
+    JAVA11_HOME = "${pkgs.temurin-jre-bin-11}";
+    JAVA17_HOME = "${pkgs.temurin-jre-bin-17}";
+    JAVA21_HOME = "${pkgs.temurin-jre-bin-21}";
   };
 
   home.packages = with pkgs; [
@@ -63,8 +74,10 @@
     fd
 
 #   Java
-    jdk17
-    jre8
+    temurin-jre-bin-8
+    temurin-jre-bin-11
+    temurin-jre-bin-17
+    temurin-jre-bin-21
 
 #   Embedded toolchain
     arm-none-eabi-gcc

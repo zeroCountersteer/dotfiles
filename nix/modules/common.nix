@@ -28,7 +28,7 @@
   users.users.yuki = {
     isNormalUser = true;
     description = "yuki";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout"];
   };
   users.defaultUserShell = pkgs.nushell;
 
