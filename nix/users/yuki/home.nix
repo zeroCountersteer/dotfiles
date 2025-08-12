@@ -90,23 +90,23 @@
     };
   };
 
-  xdg.enable = true;
-
-  xdg.dataFile."plasma/look-and-feel/Moe".source = "/home/yuki/.local/share/plasma/look-and-feel/Moe";
-  xdg.dataFile."plasma/look-and-feel/org.magpie.besot.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.besot.desktop";
-  xdg.dataFile."plasma/look-and-feel/org.magpie.besot.haiku.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.besot.haiku.desktop";
-  xdg.dataFile."plasma/look-and-feel/org.magpie.comm.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.comm.desktop";
-  xdg.dataFile."plasma/look-and-feel/org.magpie.commsol.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.commsol.desktop";
-  xdg.dataFile."plasma/look-and-feel/org.magpie.exair.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.exair.desktop";
-  xdg.dataFile."plasma/look-and-feel/org.magpie.exblue.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.exblue.desktop";
-  xdg.dataFile."plasma/look-and-feel/org.magpie.expose.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.expose.desktop";
-  xdg.dataFile."plasma/look-and-feel/org.magpie.irixium.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.irixium.desktop";
-  xdg.dataFile."plasma/look-and-feel/org.magpie.nimbus.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.nimbus.desktop";
-  xdg.dataFile."plasma/look-and-feel/org.magpie.sonumatic.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.sonumatic.desktop";
-
-  programs.plasma.workspace = {
-    lookAndFeel = "org.magpie.expose.desktop";
-  };
+#   xdg.enable = true;
+#
+#   xdg.dataFile."plasma/look-and-feel/Moe".source = "/home/yuki/.local/share/plasma/look-and-feel/Moe";
+#   xdg.dataFile."plasma/look-and-feel/org.magpie.besot.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.besot.desktop";
+#   xdg.dataFile."plasma/look-and-feel/org.magpie.besot.haiku.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.besot.haiku.desktop";
+#   xdg.dataFile."plasma/look-and-feel/org.magpie.comm.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.comm.desktop";
+#   xdg.dataFile."plasma/look-and-feel/org.magpie.commsol.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.commsol.desktop";
+#   xdg.dataFile."plasma/look-and-feel/org.magpie.exair.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.exair.desktop";
+#   xdg.dataFile."plasma/look-and-feel/org.magpie.exblue.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.exblue.desktop";
+#   xdg.dataFile."plasma/look-and-feel/org.magpie.expose.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.expose.desktop";
+#   xdg.dataFile."plasma/look-and-feel/org.magpie.irixium.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.irixium.desktop";
+#   xdg.dataFile."plasma/look-and-feel/org.magpie.nimbus.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.nimbus.desktop";
+#   xdg.dataFile."plasma/look-and-feel/org.magpie.sonumatic.desktop".source = "/home/yuki/.local/share/plasma/look-and-feel/org.magpie.sonumatic.desktop";
+#
+#   programs.plasma.workspace = {
+#     lookAndFeel = "org.magpie.expose.desktop";
+#   };
 
   home.sessionVariables = {
     CC = "clang";
