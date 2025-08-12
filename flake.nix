@@ -23,13 +23,13 @@
             networking.hostName = hostname;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
             home-manager.users.${username} = import ./nix/users/${username}/home.nix;
           }
         ] ++ extraModules;
       };
   in {
     nixosConfigurations.yuki-machine = mkSystem {
-      home-manager.backupFileExtension = "backup";
       system = "x86_64-linux";
       hostname = "yuki-machine";
       username = "yuki";
@@ -40,7 +40,6 @@
     };
 
     nixosConfigurations.work-machine = mkSystem {
-      home-manager.backupFileExtension = "backup";
       system = "x86_64-linux";
       hostname = "work-machine";
       username = "yuki";
