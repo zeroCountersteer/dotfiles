@@ -126,6 +126,7 @@
     thunderbird
 
 #   KDE Plasma
+    kdePackages.sddm-kcm
 
 #   EDA
     kicad
