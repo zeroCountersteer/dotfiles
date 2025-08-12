@@ -8,9 +8,12 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
     esp-dev.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.url = "github:nix-community/plasma-manager";
+    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, esp-dev }:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, esp-dev, plasma-manager }:
   let
     mkSystem = { system, hostname, username, extraModules ? [ ] }:
       nixpkgs.lib.nixosSystem {
@@ -24,7 +27,12 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.users.${username} = import ./nix/users/${username}/home.nix;
+            home-manager.users.${username} = {
+              imports = [
+                plasma-manager.homeManagerModules.plasma-manager
+                ./nix/users/${username}/home.nix
+              ];
+            };
           }
         ] ++ extraModules;
       };
