@@ -1,4 +1,49 @@
 { config, pkgs, lib, ... }:
+
+let
+  wall = "${../../assets/wallpapers}/Omnipresence In Wired/scan04.jpg";
+
+  breezeWithBg = pkgs.stdenv.mkDerivation {
+    pname = "sddm-breeze-yuki";
+    version = "1.1";
+    dontUnpack = true;
+    installPhase = ''
+      set -e
+
+      candidates=(
+        "${pkgs.kdePackages.plasma-desktop}/share/sddm/themes/breeze"
+        "${pkgs.kdePackages.plasma-workspace}/share/sddm/themes/breeze"
+        "${pkgs.kdePackages.breeze}/share/sddm/themes/breeze"
+      )
+
+      src_theme=""
+      for p in "''${candidates[@]}"; do
+        if [ -d "$p" ]; then
+          src_theme="$p"
+          break
+        fi
+      done
+
+      if [ -z "$src_theme" ]; then
+        echo "SDDM Breeze theme not found in known locations."
+        exit 1
+      fi
+
+      mkdir -p "$out/share/sddm/themes"
+      cp -r "$src_theme" "$out/share/sddm/themes/breeze-yuki"
+
+      cp ${wall} "$out/share/sddm/themes/breeze-yuki/background.jpg"
+
+      if grep -q '^Background=' "$out/share/sddm/themes/breeze-yuki/theme.conf"; then
+        sed -i "s|^Background=.*|Background=$out/share/sddm/themes/breeze-yuki/background.jpg|" \
+          "$out/share/sddm/themes/breeze-yuki/theme.conf"
+      else
+        printf '\n[General]\nBackground=%s\n' "$out/share/sddm/themes/breeze-yuki/background.jpg" \
+          >> "$out/share/sddm/themes/breeze-yuki/theme.conf"
+      fi
+    '';
+  };
+in
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -30,13 +75,18 @@
     "en_IE.UTF-8/UTF-8"
   ];
 
-
   networking.networkmanager.enable = true;
 
   services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
   services.xserver.xkb.layout = "us";
+
+  services.displayManager.sddm = {
+    enable = true;
+    theme = "breeze-yuki";
+    settings.Theme.Current = "breeze-yuki";
+  };
+
+  services.desktopManager.plasma6.enable = true;
 
   services.printing.enable = true;
 
@@ -52,7 +102,7 @@
   users.users.yuki = {
     isNormalUser = true;
     description = "yuki";
-    extraGroups = [ "networkmanager" "wheel" "dialout"];
+    extraGroups = [ "networkmanager" "wheel" "dialout" ];
   };
   users.defaultUserShell = pkgs.nushell;
 
@@ -61,5 +111,14 @@
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
 
-  environment.systemPackages = with pkgs; [ git kdePackages.sddm-kcm];
+  environment.systemPackages = with pkgs; [
+    git
+    kdePackages.sddm-kcm
+    breezeWithBg
+  ];
+
+  home-manager.users.yuki = {
+    programs.plasma.enable = true;
+    programs.plasma.workspace.wallpaper = wall;
+  };
 }
