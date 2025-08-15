@@ -2,51 +2,6 @@
 
 let
   wall = ../../assets/wallpapers/02.jpg;
-
-  breezeWithBg = pkgs.stdenv.mkDerivation {
-    pname = "sddm-breeze-yuki";
-    version = "1.2";
-    dontUnpack = true;
-    installPhase = ''
-      set -e
-
-      candidates=(
-        "${pkgs.kdePackages.plasma-desktop}/share/sddm/themes/breeze"
-        "${pkgs.kdePackages.plasma-workspace}/share/sddm/themes/breeze"
-        "${pkgs.kdePackages.breeze}/share/sddm/themes/breeze"
-      )
-
-      src_theme=""
-      for p in "''${candidates[@]}"; do
-        if [ -d "$p" ]; then
-          src_theme="$p"
-          break
-        fi
-      done
-
-      if [ -z "$src_theme" ]; then
-        echo "SDDM Breeze theme not found in known locations."
-        exit 1
-      fi
-
-      mkdir -p "$out/share/sddm/themes"
-      cp -r "$src_theme" "$out/share/sddm/themes/breeze-yuki"
-
-      # делаем папку темы и конфиг временно writable
-      chmod u+w -R "$out/share/sddm/themes/breeze-yuki"
-      chmod u+w "$out/share/sddm/themes/breeze-yuki/theme.conf" || true
-
-      cp ${wall} "$out/share/sddm/themes/breeze-yuki/background.jpg"
-
-      if grep -q '^Background=' "$out/share/sddm/themes/breeze-yuki/theme.conf"; then
-        sed -i "s|^Background=.*|Background=$out/share/sddm/themes/breeze-yuki/background.jpg|" \
-          "$out/share/sddm/themes/breeze-yuki/theme.conf"
-      else
-        printf '\n[General]\nBackground=%s\n' "$out/share/sddm/themes/breeze-yuki/background.jpg" \
-          >> "$out/share/sddm/themes/breeze-yuki/theme.conf"
-      fi
-    '';
-  };
 in
 {
   boot.loader.systemd-boot.enable = true;
@@ -84,14 +39,6 @@ in
   services.xserver.enable = true;
   services.xserver.xkb.layout = "us";
 
-  services.displayManager.sddm = {
-    enable = true;
-    theme = "breeze-yuki";
-    settings.Theme.Current = "breeze-yuki";
-  };
-
-  services.desktopManager.plasma6.enable = true;
-
   services.printing.enable = true;
 
   services.pulseaudio.enable = false;
@@ -115,10 +62,12 @@ in
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
 
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
+
   environment.systemPackages = with pkgs; [
     git
     kdePackages.sddm-kcm
-    breezeWithBg
   ];
 
   home-manager.users.yuki = {
