@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
 
 let
-  wall = "${../../assets/wallpapers}/Omnipresence In Wired/scan04.jpg";
+  wall = ../../assets/wallpapers/02.jpg;
 
   breezeWithBg = pkgs.stdenv.mkDerivation {
     pname = "sddm-breeze-yuki";
-    version = "1.1";
+    version = "1.2";
     dontUnpack = true;
     installPhase = ''
       set -e
@@ -31,6 +31,10 @@ let
 
       mkdir -p "$out/share/sddm/themes"
       cp -r "$src_theme" "$out/share/sddm/themes/breeze-yuki"
+
+      # делаем папку темы и конфиг временно writable
+      chmod u+w -R "$out/share/sddm/themes/breeze-yuki"
+      chmod u+w "$out/share/sddm/themes/breeze-yuki/theme.conf" || true
 
       cp ${wall} "$out/share/sddm/themes/breeze-yuki/background.jpg"
 
