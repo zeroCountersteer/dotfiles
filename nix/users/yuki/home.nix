@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+  wall = ../../assets/wallpapers/02.jpg;
+in
 {
   # imports = [ ../../modules/arduino-libs.nix ];
 
@@ -15,11 +18,12 @@
     kdePackages.kiten
     qbittorrent
     thunderbird
-    waterfox
-
     fuzzel
     iosevka-bin
     ibm-plex
+    waybar
+    grim slurp wl-clipboard
+    hyprpaper
 
 #   KDE Plasma
     kdePackages.sddm-kcm
@@ -35,7 +39,6 @@
     osu-lazer-bin
     steam
     retroarch-full
-#     prismlauncher
 
 #   CLI Tools
     ripgrep
@@ -51,19 +54,13 @@
 #   Smart Home, must die
     miraclecast
 
-#   Embedded toolchain
-#    gcc-arm-embedded
     openocd
     stlink
     dfu-util
     arduino-cli
     stm32cubemx
     esptool
-
-#   C/C++ toolchain
     gcc
-#    clang
-#    clang-tools
     gdb
     lldb
     cmake
@@ -166,88 +163,10 @@
     };
   };
 
-  home.sessionVariables.MOZ_ENABLE_WAYLAND = "1";
-
-  xdg.mimeApps.enable = true;
-  xdg.mimeApps.defaultApplications = {
-    "text/html" = "waterfox.desktop";
-    "x-scheme-handler/http" = "waterfox.desktop";
-    "x-scheme-handler/https" = "waterfox.desktop";
-    "x-scheme-handler/about" = "waterfox.desktop";
-    "x-scheme-handler/unknown" = "waterfox.desktop";
-  };
-
-  home.file.".waterfox/profiles.ini".text = ''
-    [General]
-    StartWithLastProfile=1
-    Version=2
-
-    [Profile0]
-    Name=default
-    IsRelative=1
-    Path=default
-    Default=1
-  '';
-
-  home.file.".waterfox/default/user.js".text = ''
-    user_pref("browser.bookmarks.addedImportButton", true);
-    user_pref("browser.bookmarks.restore_default_bookmarks", false);
-    user_pref("browser.bookmarks.showMobileBookmarks", true);
-    user_pref("browser.contentblocking.category", "custom");
-    user_pref("browser.download.viewableInternally.typeWasRegistered.avif", true);
-    user_pref("browser.download.viewableInternally.typeWasRegistered.webp", true);
-    user_pref("browser.engagement.sidebar-button.has-used", true);
-    user_pref("browser.ml.chat.provider", "https://chatgpt.com");
-    user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
-    user_pref("browser.newtabpage.activity-stream.showSearch", false);
-    user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
-    user_pref("browser.newtabpage.enabled", false);
-    user_pref("browser.policies.applied", true);
-    user_pref("browser.preferences.experimental.hidden", true);
-    user_pref("browser.startup.homepage", "chrome://browser/content/blanktab.html");
-    user_pref("browser.startup.page", 3);
-    user_pref("browser.toolbars.bookmarks.showOtherBookmarks", false);
-    user_pref("browser.toolbars.bookmarks.visibility", "never");
-    user_pref("browser.uiCustomization.horizontalTabsBackup", "{\"placements\":{\"widget-overflow-fixed-list\":[],\"unified-extensions-area\":[\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"nav-bar\":[\"sidebar-button\",\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"unified-extensions-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"firefox-view-button\",\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"vertical-tabs\":[],\"PersonalToolbar\":[\"import-button\",\"personal-bookmarks\"]},\"seen\":[\"developer-button\",\"screenshot-button\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\",\"vertical-tabs\",\"PersonalToolbar\",\"toolbar-menubar\",\"TabsToolbar\",\"unified-extensions-area\"],\"currentVersion\":23,\"newElementCount\":2}");
-    user_pref("browser.uiCustomization.horizontalTabstrip", "[\"firefox-view-button\",\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"]");
-    user_pref("browser.uiCustomization.navBarWhenVerticalTabs", "[\"sidebar-button\",\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"unified-extensions-button\",\"firefox-view-button\",\"alltabs-button\"]");
-    user_pref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[],\"unified-extensions-area\":[\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"nav-bar\":[\"sidebar-button\",\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"unified-extensions-button\",\"firefox-view-button\",\"alltabs-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[],\"vertical-tabs\":[\"tabbrowser-tabs\"],\"PersonalToolbar\":[\"import-button\",\"personal-bookmarks\"]},\"seen\":[\"developer-button\",\"screenshot-button\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\",\"vertical-tabs\",\"PersonalToolbar\",\"toolbar-menubar\",\"TabsToolbar\",\"unified-extensions-area\"],\"currentVersion\":23,\"newElementCount\":2}");
-    user_pref("browser.urlbar.placeholderName", "DuckDuckGo");
-    user_pref("browser.urlbar.placeholderName.private", "DuckDuckGo");
-    user_pref("browser.urlbar.shortcuts.actions", false);
-    user_pref("browser.urlbar.shortcuts.bookmarks", false);
-    user_pref("browser.urlbar.shortcuts.history", false);
-    user_pref("browser.urlbar.shortcuts.tabs", false);
-    user_pref("browser.urlbar.suggest.bookmark", false);
-    user_pref("browser.urlbar.suggest.engines", false);
-    user_pref("browser.urlbar.suggest.history", false);
-    user_pref("browser.urlbar.suggest.openpage", false);
-    user_pref("dom.forms.autocomplete.formautofill", true);
-    user_pref("dom.security.https_only_mode", true);
-    user_pref("dom.security.https_only_mode_pbm", true);
-    user_pref("extensions.activeThemeID", "default-theme@mozilla.org");
-    user_pref("media.eme.enabled", true);
-    user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
-    user_pref("network.dns.disablePrefetch", true);
-    user_pref("network.http.speculative-parallel-limit", 0);
-    user_pref("network.predictor.enabled", false);
-    user_pref("network.prefetch-next", false);
-    user_pref("permissions.default.camera", 2);
-    user_pref("permissions.default.geo", 2);
-    user_pref("permissions.default.microphone", 2);
-    user_pref("privacy.clearOnShutdown_v2.formdata", true);
-    user_pref("privacy.fingerprintingProtection", true);
-    user_pref("privacy.trackingprotection.enabled", true);
-    user_pref("sidebar.main.tools", "aichat,syncedtabs,history,bookmarks");
-    user_pref("sidebar.revamp", true);
-    user_pref("sidebar.verticalTabs", true);
-  '';
-
   home.sessionVariables = {
     CC = "clang";
     CXX = "clang++";
   };
-
 
   xdg.configFile."fuzzel/fuzzel.ini".text = ''
     [main]
@@ -264,16 +183,149 @@
     border=8c8fa1ff
   '';
 
+  xdg.configFile."hypr/hyprpaper.conf".text = ''
+    preload = ${builtins.toString wall}
+    wallpaper = ,${builtins.toString wall}
+  '';
 
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
+      monitor = [
+        "eDP-1, preferred, 0x0, 1"
+        "HDMI-A-1, preferred, 1920x0, 1.0"
+      ];
+      env = [
+        "XCURSOR_SIZE,24"
+      ];
+
       "$mod" = "SUPER";
+      "$terminal" = "alacritty";
+      "$menu" = "fuzzel";
+
+      general = {
+        gaps_in = 5;
+        gaps_out = 20;
+        border_size = 2;
+        "col.active_border" = "0x7287fd";
+        "col.inactive_border" = "0xacb0be";
+      };
+
+      decoration = {
+        rounding = 8;
+        blur = {
+          enabled = true;
+          size = 3;
+          passes = 1;
+        };
+      };
+
+      animations = {
+        enabled = true;
+        bezier = [ "myBezier, 0.05, 0.9, 0.1, 1.05" ];
+        animation = [
+          "windows, 1, 7, myBezier"
+          "border, 1, 10, default"
+          "fade, 1, 7, default"
+          "workspaces, 1, 6, default"
+        ];
+      };
+
+      input = {
+        kb_layout = "us,ru";
+        kb_options = "grp:alt_shift_toggle";
+        follow_mouse = 1;
+        touchpad = { natural_scroll = true; };
+      };
+
       bind = [
-        "$mod, D, exec, fuzzel"
+        "$mod, Return, exec, $terminal"
+        "$mod, D, exec, $menu"
+
+        "$mod, Q, killactive,"
+        "$mod, M, exit,"
+
+        "$mod, 1, workspace, 1"
+        "$mod, 2, workspace, 2"
+        "$mod, 3, workspace, 3"
+        "$mod, 4, workspace, 4"
+        "$mod, 5, workspace, 5"
+
+        "$mod SHIFT, 1, movetoworkspace, 1"
+        "$mod SHIFT, 2, movetoworkspace, 2"
+        "$mod SHIFT, 3, movetoworkspace, 3"
+        "$mod SHIFT, 4, movetoworkspace, 4"
+        "$mod SHIFT, 5, movetoworkspace, 5"
+
+        ''
+          , Print, exec, grim -g "$(slurp)" - | wl-copy
+        ''
+      ];
+
+      exec-once = [
+        "hyprpaper"
       ];
     };
   };
 
+  programs.firefox = {
+    enable = true;
+    profiles."default" = {
+      isDefault = true;
+      settings = {
+        "browser.bookmarks.addedImportButton" = true;
+        "browser.bookmarks.restore_default_bookmarks" = false;
+        "browser.bookmarks.showMobileBookmarks" = true;
+        "browser.contentblocking.category" = "custom";
+        "browser.download.viewableInternally.typeWasRegistered.avif" = true;
+        "browser.download.viewableInternally.typeWasRegistered.webp" = true;
+        "browser.engagement.sidebar-button.has-used" = true;
+        "browser.ml.chat.provider" = "https://chatgpt.com";
+        "browser.newtabpage.activity-stream.feeds.topsites" = false;
+        "browser.newtabpage.activity-stream.showSearch" = false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+        "browser.newtabpage.enabled" = false;
+        "browser.policies.applied" = true;
+        "browser.preferences.experimental.hidden" = true;
+        "browser.startup.homepage" = "chrome://browser/content/blanktab.html";
+        "browser.startup.page" = 3;
+        "browser.toolbars.bookmarks.showOtherBookmarks" = false;
+        "browser.toolbars.bookmarks.visibility" = "never";
+        "browser.uiCustomization.horizontalTabsBackup" = "{\"placements\":{\"widget-overflow-fixed-list\":[],\"unified-extensions-area\":[\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"nav-bar\":[\"sidebar-button\",\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"unified-extensions-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"firefox-view-button\",\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"vertical-tabs\":[],\"PersonalToolbar\":[\"import-button\",\"personal-bookmarks\"]},\"seen\":[\"developer-button\",\"screenshot-button\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\",\"vertical-tabs\",\"PersonalToolbar\",\"toolbar-menubar\",\"TabsToolbar\",\"unified-extensions-area\"],\"currentVersion\":23,\"newElementCount\":2}";
+        "browser.uiCustomization.horizontalTabstrip" = "[\"firefox-view-button\",\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"]";
+        "browser.uiCustomization.navBarWhenVerticalTabs" = "[\"sidebar-button\",\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"unified-extensions-button\",\"firefox-view-button\",\"alltabs-button\"]";
+        "browser.uiCustomization.state" = "{\"placements\":{\"widget-overflow-fixed-list\":[],\"unified-extensions-area\":[\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"nav-bar\":[\"sidebar-button\",\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"unified-extensions-button\",\"firefox-view-button\",\"alltabs-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[],\"vertical-tabs\":[\"tabbrowser-tabs\"],\"PersonalToolbar\":[\"import-button\",\"personal-bookmarks\"]},\"seen\":[\"developer-button\",\"screenshot-button\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\",\"vertical-tabs\",\"PersonalToolbar\",\"toolbar-menubar\",\"TabsToolbar\",\"unified-extensions-area\"],\"currentVersion\":23,\"newElementCount\":2}";
+        "browser.urlbar.placeholderName" = "DuckDuckGo";
+        "browser.urlbar.placeholderName.private" = "DuckDuckGo";
+        "browser.urlbar.shortcuts.actions" = false;
+        "browser.urlbar.shortcuts.bookmarks" = false;
+        "browser.urlbar.shortcuts.history" = false;
+        "browser.urlbar.shortcuts.tabs" = false;
+        "browser.urlbar.suggest.bookmark" = false;
+        "browser.urlbar.suggest.engines" = false;
+        "browser.urlbar.suggest.history" = false;
+        "browser.urlbar.suggest.openpage" = false;
+        "dom.forms.autocomplete.formautofill" = true;
+        "dom.security.https_only_mode" = true;
+        "dom.security.https_only_mode_pbm" = true;
+        "extensions.activeThemeID" = "default-theme@mozilla.org";
+        "media.eme.enabled" = true;
+        "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
+        "network.dns.disablePrefetch" = true;
+        "network.http.speculative-parallel-limit" = 0;
+        "network.predictor.enabled" = false;
+        "network.prefetch-next" = false;
+        "permissions.default.camera" = 2;
+        "permissions.default.geo" = 2;
+        "permissions.default.microphone" = 2;
+        "privacy.clearOnShutdown_v2.formdata" = true;
+        "privacy.fingerprintingProtection" = true;
+        "privacy.trackingprotection.enabled" = true;
+        "sidebar.main.tools" = "aichat,syncedtabs,history,bookmarks";
+        "sidebar.revamp" = true;
+        "sidebar.verticalTabs" = true;
+      };
+    };
+  };
 
 }

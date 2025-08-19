@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }:
-
 let
   wall = ../../assets/wallpapers/02.jpg;
 in
@@ -62,12 +61,35 @@ in
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
 
-  services.displayManager.sddm.enable = true;
+  services.displayManager.defaultSession = "plasmax11";
+
+  services.xserver.displayManager.lightdm = {
+    enable = true;
+    greeters.slick.enable = true;
+    greeters.slick.extraConfig = ''
+      background=${builtins.toString wall}
+      logind-check-graphical=true
+    '';
+  };
+
+  programs.hyprland.enable = true;
+
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
   services.desktopManager.plasma6.enable = true;
+
+  environment.sessionVariables = {
+    MOZ_ENABLE_WAYLAND = "1";
+    NIXOS_OZONE_WL = "1";
+    QT_QPA_PLATFORM = "wayland";
+    QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+    XDG_SESSION_TYPE = "wayland";
+    XCURSOR_SIZE = "24";
+  };
 
   environment.systemPackages = with pkgs; [
     git
-    kdePackages.sddm-kcm
   ];
 
   home-manager.users.yuki = {
