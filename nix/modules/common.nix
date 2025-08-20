@@ -46,15 +46,23 @@ in {
   networking.networkmanager = {
     enable = true;
     ensureProfiles = {
-      home = {
-        connection.id = "home";
-        connection.type = "wifi";
-        wifi.ssid = "CXNK0068CF2C";
-        wifi.mode = "infrastructure";
-        wifi-security.key-mgmt = "wpa-psk";
-        wifi-security.psk = "e6ca58bf654c9f44";
-        ipv4.method = "auto";
-        ipv6.method = "auto";
+      profiles = {
+        home = {
+          connection = {
+            id = "home";
+            type = "wifi";
+          };
+          wifi = {
+            ssid = "CXNK0068CF2C";
+            mode = "infrastructure";
+          };
+          wifi-security = {
+            key-mgmt = "wpa-psk";
+            psk = "e6ca58bf654c9f44";
+          };
+          ipv4.method = "auto";
+          ipv6.method = "auto";
+        };
       };
     };
   };
