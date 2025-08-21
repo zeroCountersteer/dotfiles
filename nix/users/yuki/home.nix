@@ -16,6 +16,7 @@ in
     github-desktop
     kdePackages.kate
     kdePackages.kiten
+    kdePackages.dolphin
     qbittorrent
     thunderbird
     fuzzel
@@ -24,9 +25,6 @@ in
     waybar
     grim slurp wl-clipboard
     hyprpaper
-
-#   KDE Plasma
-    kdePackages.sddm-kcm
 
 #   EDA
     kicad
