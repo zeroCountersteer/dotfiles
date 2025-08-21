@@ -70,7 +70,7 @@ in {
   services = {
     xserver.enable = false;
     printing.enable = true;
-
+    desktopManager.plasma6.enable = true;
     pulseaudio.enable = false;
     pipewire = {
       enable = true;
