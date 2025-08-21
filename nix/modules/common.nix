@@ -70,7 +70,6 @@ in {
   services = {
     xserver.enable = false;
     printing.enable = true;
-    desktopManager.plasma6.enable = true;
     pulseaudio.enable = false;
     pipewire = {
       enable = true;
@@ -92,10 +91,23 @@ in {
     };
   };
 
+  services.desktopManager.plasma6 = {
+    enable = true;
+    enableQt5Integration = true;
+    notoPackage = pkgs.noto-fonts;
+  };
+
   security = {
     rtkit.enable = true;
     polkit.enable = true;
   };
+
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    konsole
+    oxygen
+    plasma-browser-integration
+    kdepim-runtime
+  ];
 
   users = {
     defaultUserShell = pkgs.nushell;
@@ -116,17 +128,6 @@ in {
     enable32Bit = true;
   };
 
-  programs.hyprland.enable = true;
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-hyprland
-    ];
-    config.common.default = [ "hyprland" "gtk" ];
-  };
-
   environment = {
     sessionVariables = {
       MOZ_ENABLE_WAYLAND = "1";
@@ -135,6 +136,6 @@ in {
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       XCURSOR_SIZE = "24";
     };
-    systemPackages = with pkgs; [ git ];
+    systemPackages = with pkgs; [];
   };
 }

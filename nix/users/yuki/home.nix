@@ -22,9 +22,6 @@ in
     fuzzel
     iosevka-bin
     ibm-plex
-    waybar
-    grim slurp wl-clipboard
-    hyprpaper
 
 #   EDA
     kicad
@@ -42,12 +39,6 @@ in
     ripgrep
     fd
     fastfetch
-
-#   Java
-#    temurin-jre-bin-8
-#    temurin-jre-bin-11
-#    temurin-jre-bin-17
-#    temurin-jre-bin-21
 
 #   Smart Home, must die
     miraclecast
@@ -180,91 +171,6 @@ in
     selection-text=eff1f5ff
     border=8c8fa1ff
   '';
-
-  xdg.configFile."hypr/hyprpaper.conf".text = ''
-    preload = ${builtins.toString wall}
-    wallpaper = ,${builtins.toString wall}
-  '';
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    settings = {
-      monitor = [
-        "eDP-1, preferred, 0x0, 1"
-        "HDMI-A-1, preferred, 1920x0, 1.0"
-      ];
-      env = [
-        "XCURSOR_SIZE,24"
-      ];
-
-      "$mod" = "SUPER";
-      "$terminal" = "alacritty";
-      "$menu" = "fuzzel";
-
-      general = {
-        gaps_in = 5;
-        gaps_out = 20;
-        border_size = 2;
-        "col.active_border" = "0x7287fd";
-        "col.inactive_border" = "0xacb0be";
-      };
-
-      decoration = {
-        rounding = 8;
-        blur = {
-          enabled = true;
-          size = 3;
-          passes = 1;
-        };
-      };
-
-      animations = {
-        enabled = true;
-        bezier = [ "myBezier, 0.05, 0.9, 0.1, 1.05" ];
-        animation = [
-          "windows, 1, 7, myBezier"
-          "border, 1, 10, default"
-          "fade, 1, 7, default"
-          "workspaces, 1, 6, default"
-        ];
-      };
-
-      input = {
-        kb_layout = "us,ru";
-        kb_options = "grp:alt_shift_toggle";
-        follow_mouse = 1;
-        touchpad = { natural_scroll = true; };
-      };
-
-      bind = [
-        "$mod, Return, exec, $terminal"
-        "$mod, D, exec, $menu"
-
-        "$mod, Q, killactive,"
-        "$mod, M, exit,"
-
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
-        "$mod SHIFT, 5, movetoworkspace, 5"
-
-        ''
-          , Print, exec, grim -g "$(slurp)" - | wl-copy
-        ''
-      ];
-
-      exec-once = [
-        "hyprpaper"
-      ];
-    };
-  };
 
   programs.firefox = {
     enable = true;
