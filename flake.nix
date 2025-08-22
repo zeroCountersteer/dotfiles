@@ -1,5 +1,5 @@
 {
-  description = "NixOS + Home Manager dotfiles";
+  description = "NixOS + Home Manager with plasma-manager";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
@@ -13,7 +13,7 @@
     plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, esp-dev, plasma-manager }:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, esp-dev, plasma-manager, ... }:
   let
     mkSystem = { system, hostname, username, extraModules ? [ ] }:
       nixpkgs.lib.nixosSystem {

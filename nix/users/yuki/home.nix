@@ -175,7 +175,7 @@ in
     border=8c8fa1ff
   '';
 
-  programs.firefox = {
+  programs.librewolf = {
     enable = true;
     profiles."default" = {
       isDefault = true;
