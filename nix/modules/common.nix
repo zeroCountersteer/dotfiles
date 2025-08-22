@@ -77,10 +77,9 @@ in {
       alsa.support32Bit = true;
       pulse.enable = true;
     };
-
     xserver.xkb = {
       layout = "us,ru";
-      variant = ",phonetic";
+      variant = ",";
       options = "grp:alt_shift_toggle,grp_led:scroll,terminate:ctrl_alt_bksp";
     };
 
@@ -106,6 +105,8 @@ in {
   security = {
     rtkit.enable = true;
     polkit.enable = true;
+    pam.services.greetd.enableKwallet = true;
+    pam.services.greetd.kwallet.forceRun = true;
   };
 
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
@@ -144,4 +145,19 @@ in {
     };
     systemPackages = with pkgs; [];
   };
+
+  environment.etc."wallpapers/02.jpg".source = wall;
+
+  environment.etc."xdg/autostart/99-set-wallpaper.desktop".text = ''
+  [Desktop Entry]
+  Type=Application
+  Name=Set wallpaper
+  OnlyShowIn=KDE;
+  X-KDE-autostart-phase=2
+  Exec=${pkgs.writeShellScript "set-wallpaper.sh" ''
+  ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage --fill-mode preserveAspectFit /etc/wallpapers/02.jpg
+  ${pkgs.qt6.qtbase}/bin/qdbus6 org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "var ds=desktops();for (var i=0;i<ds.length;i++){ds[i].currentConfigGroup=['Wallpaper','org.kde.image','General'];ds[i].writeConfig('Blur','true');ds[i].reloadConfig();}"
+  ''}
+  '';
+
 }

@@ -23,6 +23,9 @@ in
     iosevka-bin
     ibm-plex
 
+    git
+    nil
+
 #   EDA
     kicad
     kicadAddons.kikit
