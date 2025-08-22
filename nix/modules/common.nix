@@ -78,6 +78,12 @@ in {
       pulse.enable = true;
     };
 
+    xserver.xkb = {
+      layout = "us,ru";
+      variant = ",phonetic";
+      options = "grp:alt_shift_toggle,grp_led:scroll,terminate:ctrl_alt_bksp";
+    };
+
     dbus.enable = true;
     greetd = {
       enable = true;
