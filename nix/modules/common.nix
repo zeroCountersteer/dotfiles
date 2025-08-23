@@ -1,7 +1,5 @@
 { config, pkgs, lib, ... }:
-let
-  wall = ../../assets/wallpapers/02.jpg;
-in {
+{
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
@@ -84,16 +82,11 @@ in {
     };
 
     dbus.enable = true;
-    greetd = {
-      enable = true;
-      settings = {
-        terminal.vt = 1;
-        default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session";
-          user = "greeter";
-        };
-      };
-    };
+  };
+
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
   };
 
   services.desktopManager.plasma6 = {
@@ -105,8 +98,6 @@ in {
   security = {
     rtkit.enable = true;
     polkit.enable = true;
-    pam.services.greetd.enableKwallet = true;
-    pam.services.greetd.kwallet.forceRun = true;
   };
 
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
@@ -145,6 +136,4 @@ in {
     };
     systemPackages = with pkgs; [];
   };
-
-  environment.etc."wallpapers/02.jpg".source = wall;
 }

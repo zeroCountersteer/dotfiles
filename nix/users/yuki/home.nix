@@ -17,6 +17,7 @@ in
     kdePackages.kate
     kdePackages.kiten
     kdePackages.dolphin
+    kdePackages.kwalletmanager
     qbittorrent
     thunderbird
     fuzzel
@@ -26,24 +27,22 @@ in
     git
     nil
 
-#   EDA
     kicad
     kicadAddons.kikit
     freerouting
     freecad
     diylc
+    octaveFull
+    qucs-s
 
-#   Games
     osu-lazer-bin
     steam
     retroarch-full
 
-#   CLI Tools
     ripgrep
     fd
     fastfetch
 
-#   Smart Home, must die
     miraclecast
 
     openocd
@@ -234,5 +233,5 @@ in
       };
     };
   };
-
 }
+
