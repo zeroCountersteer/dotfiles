@@ -1,7 +1,4 @@
 { config, pkgs, ... }:
-let
-  wall = ../../assets/wallpapers/02.jpg;
-in
 {
   # imports = [ ../../modules/arduino-libs.nix ];
 
@@ -36,8 +33,9 @@ in
     qucs-s
 
     osu-lazer-bin
-    steam
     retroarch-full
+    pcsx2
+    lutris
 
     ripgrep
     fd
