@@ -8,6 +8,7 @@
 
   programs.home-manager.enable = true;
 
+
   home.packages = with pkgs; [
 #   Desktop
     github-desktop
@@ -61,6 +62,27 @@
     binutils
     lld
     mold
+
+    rustup
+    sccache
+
+    qt6Packages.qtbase
+    qt6Packages.qtdeclarative
+    qt6Packages.qtshadertools
+    qt6Packages.qtcharts
+    qt6Packages.qt5compat
+
+    openssl
+    zlib
+    pulseaudio
+    libxkbcommon
+    wayland
+    xorg.libX11
+    xorg.libXcursor
+    xorg.libXrandr
+    xorg.libXi
+    libGL
+    vulkan-loader
   ];
 
   programs.nushell.enable = true;
@@ -153,8 +175,15 @@
   };
 
   home.sessionVariables = {
-    CC = "clang";
-    CXX = "clang++";
+    CC = "gcc";
+    CXX = "g++";
+    RUSTC_WRAPPER = "${pkgs.sccache}/bin/sccache";
+    SCCACHE_DIR = "$HOME/.cache/sccache";
+    CARGO_TARGET_DIR = "$HOME/.cargo-target";
+    RUSTFLAGS = "-Clink-arg=-fuse-ld=${pkgs.mold}/bin/mold";
+    QT_PLUGIN_PATH = "${pkgs.qt6Packages.qtbase}/lib/qt6/plugins";
+    QML2_IMPORT_PATH = "${pkgs.qt6Packages.qtdeclarative}/lib/qt6/qml:${pkgs.qt6Packages.qtcharts}/lib/qt6/qml";
+    QT_QPA_PLATFORM = "wayland,xcb";
   };
 
   xdg.configFile."fuzzel/fuzzel.ini".text = ''
