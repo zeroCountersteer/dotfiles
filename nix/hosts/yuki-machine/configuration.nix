@@ -8,6 +8,8 @@
 
   environment.systemPackages = with pkgs; [
     steam-run
+    wineWowPackages.stable
+    winetricks
   ];
 
   programs.steam = {
