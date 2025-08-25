@@ -8,82 +8,85 @@
 
   programs.home-manager.enable = true;
 
+home.packages = with pkgs; [
+  github-desktop
+  kdePackages.kate
+  kdePackages.kiten
+  kdePackages.dolphin
+  kdePackages.kwalletmanager
+  qbittorrent
+  thunderbird
+  fuzzel
+  iosevka-bin
+  ibm-plex
 
-  home.packages = with pkgs; [
-#   Desktop
-    github-desktop
-    kdePackages.kate
-    kdePackages.kiten
-    kdePackages.dolphin
-    kdePackages.kwalletmanager
-    qbittorrent
-    thunderbird
-    fuzzel
-    iosevka-bin
-    ibm-plex
+  git
+  nil
 
-    git
-    nil
+  kicad
+  kicadAddons.kikit
+  freerouting
+  freecad
+  diylc
+  octaveFull
+  qucs-s
 
-    kicad
-    kicadAddons.kikit
-    freerouting
-    freecad
-    diylc
-    octaveFull
-    qucs-s
+  osu-lazer-bin
+  retroarch-full
+  pcsx2
+  lutris
 
-    osu-lazer-bin
-    retroarch-full
-    pcsx2
-    lutris
+  ripgrep
+  fd
+  fastfetch
 
-    ripgrep
-    fd
-    fastfetch
+  miraclecast
 
-    miraclecast
+  openocd
+  stlink
+  dfu-util
+  arduino-cli
+  stm32cubemx
+  esptool
+  gcc
+  gdb
+  lldb
+  cmake
+  ninja
+  pkg-config
+  valgrind
+  bear
+  gnumake
+  binutils
+  lld
+  mold
 
-    openocd
-    stlink
-    dfu-util
-    arduino-cli
-    stm32cubemx
-    esptool
-    gcc
-    gdb
-    lldb
-    cmake
-    ninja
-    pkg-config
-    valgrind
-    bear
-    gnumake
-    binutils
-    lld
-    mold
+  rustup
+  sccache
 
-    rustup
-    sccache
+  qt6Packages.qtbase
+  qt6Packages.qtdeclarative
+  qt6Packages.qtshadertools
+  qt6Packages.qtcharts
+  qt6Packages.qt5compat
+  qt6Packages.qtwayland
 
-    qt6Packages.qtbase
-    qt6Packages.qtdeclarative
-    qt6Packages.qtshadertools
-    qt6Packages.qtcharts
-    qt6Packages.qt5compat
+  openssl
+  zlib
+  pulseaudio
+  libxkbcommon
+  wayland
+  xorg.libX11
+  xorg.libXcursor
+  xorg.libXrandr
+  xorg.libXi
+  xorg.libXext
+  libGL
+  libGLU
+  mesa
+  vulkan-loader
+];
 
-    openssl
-    zlib
-    pulseaudio
-    libxkbcommon
-    wayland
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXrandr
-    xorg.libXi
-    libGL
-    vulkan-loader
-  ];
 
   programs.nushell.enable = true;
 
