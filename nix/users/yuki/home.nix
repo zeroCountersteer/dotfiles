@@ -85,8 +85,13 @@ home.packages = with pkgs; [
   libGLU
   mesa
   vulkan-loader
+  qt6.full
+  libglvnd
+  sdl3
+  sdl3.dev
+  sdl3-ttf
+  sdl3-image
 ];
-
 
   programs.nushell.enable = true;
 
@@ -187,6 +192,16 @@ home.packages = with pkgs; [
     QT_PLUGIN_PATH = "${pkgs.qt6Packages.qtbase}/lib/qt6/plugins";
     QML2_IMPORT_PATH = "${pkgs.qt6Packages.qtdeclarative}/lib/qt6/qml:${pkgs.qt6Packages.qtcharts}/lib/qt6/qml";
     QT_QPA_PLATFORM = "wayland,xcb";
+
+    # Qt
+    QT_PREFIX = "${pkgs.qt6Packages.qtbase}";
+    Qt6_DIR = "${pkgs.qt6Packages.qtbase}/lib/cmake/Qt6";
+    CMAKE_PREFIX_PATH = "${pkgs.qt6Packages.qtbase}";
+    CMAKE_IGNORE_PREFIX_PATH = "/etc/profiles/per-user/yuki";
+
+    # SDL3
+    SDL3_PREFIX = "${pkgs.sdl3}";
+    SDL3_DIR = "${pkgs.sdl3}/lib/cmake/SDL3";
   };
 
   xdg.configFile."fuzzel/fuzzel.ini".text = ''

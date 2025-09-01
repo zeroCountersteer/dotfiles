@@ -64,9 +64,9 @@ in {
           ipv4.method = "auto";
           ipv6.method = "auto";
         };
-        home2 = {
+        "Far far away" = {
           connection = {
-            id = "home2";
+            id = "Far far away";
             type = "wifi";
           };
           wifi = {
