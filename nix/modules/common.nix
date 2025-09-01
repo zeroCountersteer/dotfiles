@@ -64,6 +64,22 @@ in {
           ipv4.method = "auto";
           ipv6.method = "auto";
         };
+        home2 = {
+          connection = {
+            id = "home2";
+            type = "wifi";
+          };
+          wifi = {
+            ssid = "Far far away";
+            mode = "infrastructure";
+          };
+          wifi-security = {
+            key-mgmt = "wpa-psk";
+            psk = "bluetooth";
+          };
+          ipv4.method = "auto";
+          ipv6.method = "auto";
+        };
       };
     };
   };
