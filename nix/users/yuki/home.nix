@@ -221,6 +221,7 @@ home.packages = with pkgs; [
 
   programs.firefox = {
     enable = true;
+    package = pkgs.librewolf;
     profiles."default" = {
       isDefault = true;
       settings = {

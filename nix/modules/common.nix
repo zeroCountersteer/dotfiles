@@ -42,47 +42,9 @@ in {
   };
 
   systemd.network.enable = false;
-  networking.wireless.enable = lib.mkForce false;
-
-  networking.networkmanager = {
-    enable = true;
-    ensureProfiles = {
-      profiles = {
-        home = {
-          connection = {
-            id = "home";
-            type = "wifi";
-          };
-          wifi = {
-            ssid = "CXNK0068CF2C";
-            mode = "infrastructure";
-          };
-          wifi-security = {
-            key-mgmt = "wpa-psk";
-            psk = "e6ca58bf654c9f44";
-          };
-          ipv4.method = "auto";
-          ipv6.method = "auto";
-        };
-        "Far far away" = {
-          connection = {
-            id = "Far far away";
-            type = "wifi";
-          };
-          wifi = {
-            ssid = "Far far away";
-            mode = "infrastructure";
-          };
-          wifi-security = {
-            key-mgmt = "wpa-psk";
-            psk = "bluetooth";
-          };
-          ipv4.method = "auto";
-          ipv6.method = "auto";
-        };
-      };
-    };
-  };
+  networking.networkmanager.enable = true;
+  networking.wireless.iwd.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
 
   services = {
     xserver.enable = false;
@@ -319,7 +281,7 @@ Type=oneshot
 ExecStart=${pkgs.bash}/bin/bash -lc '
   mkdir -p "$HOME/.config"
   ln -sf /etc/kde/kdeglobals "$HOME/.config/kdeglobals"
-  ln -sf /etc/kde/kglobalshortcutsrc "$HOME/.config/kglobalshortcutsrc"
+b  ln -sf /etc/kde/kglobalshortcutsrc "$HOME/.config/kglobalshortcutsrc"
   ln -sf /etc/kde/kded5rc "$HOME/.config/kded5rc"
   ln -sf /etc/kde/ksplashrc "$HOME/.config/ksplashrc"
   ln -sf /etc/kde/kwinrc "$HOME/.config/kwinrc"
