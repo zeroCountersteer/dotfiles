@@ -47,6 +47,13 @@
     ];
   };
 
+  services.zerotierone = {
+    enable = true;
+    joinNetworks = [
+      "233ccaac2706b060"
+    ];
+  };
+
   networking.hostName = "yuki-machine";
   system.stateVersion = "25.05";
 }
