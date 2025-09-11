@@ -225,13 +225,6 @@ home.packages = with pkgs; [
   programs.plasma = {
     enable = true;
     workspace.wallpaper = wallpaper;
-    fonts = {
-      general.family = font;
-      fixed.family = monoFont;
-      small.family = font;
-      toolbar.family = font;
-      menu.family = font;
-    };
   };
 
   programs.firefox = {
