@@ -215,6 +215,8 @@ home.packages = with pkgs; [
     "kwinrc".source = ../../assets/kde/kwinrc;
     "plasma-org.kde.plasma.desktop-appletsrc".source = ../../assets/kde/plasma-org.kde.plasma.desktop-appletsrc;
     "kded5rc".source = ../../assets/kde/kded5rc;
+    "powermanagementprofilesrc".source = ../../assets/kde/powermanagementprofilesrc;
+    "kwalletrc".source = ../../assets/kde/kwalletrc;
   };
 
   programs.plasma = {
