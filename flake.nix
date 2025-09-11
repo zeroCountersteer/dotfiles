@@ -31,6 +31,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit wallpaper font monoFont; };
             home-manager.users.${username} = {
               imports = [
                 plasma-manager.homeManagerModules.plasma-manager

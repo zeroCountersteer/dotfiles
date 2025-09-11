@@ -209,14 +209,17 @@ home.packages = with pkgs; [
       selection-text=eff1f5ff
       border=8c8fa1ff
     '';
-    "kdeglobals".source = ../../assets/kde/kdeglobals;
-    "kglobalshortcutsrc".source = ../../assets/kde/kglobalshortcutsrc;
-    "ksplashrc".source = ../../assets/kde/ksplashrc;
-    "kwinrc".source = ../../assets/kde/kwinrc;
-    "plasma-org.kde.plasma.desktop-appletsrc".source = ../../assets/kde/plasma-org.kde.plasma.desktop-appletsrc;
-    "kded5rc".source = ../../assets/kde/kded5rc;
-    "powermanagementprofilesrc".source = ../../assets/kde/powermanagementprofilesrc;
-    "kwalletrc".source = ../../assets/kde/kwalletrc;
+    "kdeglobals".source = pkgs.substituteAll {
+      src = ../../../assets/kde/kdeglobals;
+      inherit font monoFont;
+    };
+    "kglobalshortcutsrc".source = ../../../assets/kde/kglobalshortcutsrc;
+    "ksplashrc".source = ../../../assets/kde/ksplashrc;
+    "kwinrc".source = ../../../assets/kde/kwinrc;
+    "plasma-org.kde.plasma.desktop-appletsrc".source = ../../../assets/kde/plasma-org.kde.plasma.desktop-appletsrc;
+    "kded5rc".source = ../../../assets/kde/kded5rc;
+    "powermanagementprofilesrc".source = ../../../assets/kde/powermanagementprofilesrc;
+    "kwalletrc".source = ../../../assets/kde/kwalletrc;
   };
 
   programs.plasma = {
@@ -236,7 +239,8 @@ home.packages = with pkgs; [
     package = pkgs.librewolf;
     profiles.default = {
       isDefault = true;
-      extraConfig = builtins.readFile ../../assets/librefox/user.js;
+      extraConfig = builtins.readFile ../../../assets/librefox/user.js;
+
     };
   };
 
