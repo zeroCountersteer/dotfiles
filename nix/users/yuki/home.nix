@@ -1,6 +1,5 @@
-{ config, pkgs, ... }:
+{ config, pkgs, wallpaper, font, monoFont, ... }:
 {
-  # imports = [ ../../modules/arduino-libs.nix ];
 
   home.username = "yuki";
   home.homeDirectory = "/home/yuki";
@@ -77,7 +76,6 @@ home.packages = with pkgs; [
   libGLU
   mesa
   vulkan-loader
-  qt6.full
   libglvnd
   sdl3
   sdl3.dev
@@ -98,9 +96,9 @@ home.packages = with pkgs; [
     settings = {
       window.opacity = 0.9;
       font = {
-        normal = { family = "IBM Plex Mono"; style = "Regular"; };
-        bold   = { family = "IBM Plex Mono"; style = "Bold"; };
-        italic = { family = "IBM Plex Mono"; style = "Italic"; };
+        normal = { family = monoFont; style = "Regular"; };
+        bold   = { family = monoFont; style = "Bold"; };
+        italic = { family = monoFont; style = "Italic"; };
         size = 10;
       };
       colors = {
@@ -196,80 +194,47 @@ home.packages = with pkgs; [
     SDL3_DIR = "${pkgs.sdl3}/lib/cmake/SDL3";
   };
 
-  xdg.configFile."fuzzel/fuzzel.ini".text = ''
-    [main]
-    font=IBM Plex Mono:style=Regular:size=12
-    prompt=
-    icons=true
+  xdg.configFile = {
+    "fuzzel/fuzzel.ini".text = ''
+      [main]
+      font=${monoFont}:style=Regular:size=12
+      prompt=
+      icons=true
 
-    [colors]
-    background=eff1f5ff
-    text=4c4f69ff
-    match=1e66f5ff
-    selection=dc8a78ff
-    selection-text=eff1f5ff
-    border=8c8fa1ff
-  '';
+      [colors]
+      background=eff1f5ff
+      text=4c4f69ff
+      match=1e66f5ff
+      selection=dc8a78ff
+      selection-text=eff1f5ff
+      border=8c8fa1ff
+    '';
+    "kdeglobals".source = pkgs.substituteAll {
+      src = ../../../assets/kde/kdeglobals;
+      inherit font monoFont;
+    };
+    "kglobalshortcutsrc".source = ../../../assets/kde/kglobalshortcutsrc;
+    "ksplashrc".source = ../../../assets/kde/ksplashrc;
+    "kwinrc".source = ../../../assets/kde/kwinrc;
+    "plasma-org.kde.plasma.desktop-appletsrc".source = ../../../assets/kde/plasma-org.kde.plasma.desktop-appletsrc;
+    "kded5rc".source = ../../../assets/kde/kded5rc;
+    "powermanagementprofilesrc".source = ../../../assets/kde/powermanagementprofilesrc;
+    "kwalletrc".source = ../../../assets/kde/kwalletrc;
+  };
+
+  programs.plasma = {
+    enable = true;
+    workspace.wallpaper = wallpaper;
+  };
 
   programs.firefox = {
     enable = true;
     package = pkgs.librewolf;
-    profiles."default" = {
+    profiles.default = {
       isDefault = true;
-      settings = {
-        "browser.bookmarks.addedImportButton" = true;
-        "browser.bookmarks.restore_default_bookmarks" = false;
-        "browser.bookmarks.showMobileBookmarks" = true;
-        "browser.contentblocking.category" = "custom";
-        "browser.download.viewableInternally.typeWasRegistered.avif" = true;
-        "browser.download.viewableInternally.typeWasRegistered.webp" = true;
-        "browser.engagement.sidebar-button.has-used" = true;
-        "browser.ml.chat.provider" = "https://chatgpt.com";
-        "browser.newtabpage.activity-stream.feeds.topsites" = false;
-        "browser.newtabpage.activity-stream.showSearch" = false;
-        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-        "browser.newtabpage.enabled" = false;
-        "browser.policies.applied" = true;
-        "browser.preferences.experimental.hidden" = true;
-        "browser.startup.homepage" = "chrome://browser/content/blanktab.html";
-        "browser.startup.page" = 3;
-        "browser.toolbars.bookmarks.showOtherBookmarks" = false;
-        "browser.toolbars.bookmarks.visibility" = "never";
-        "browser.uiCustomization.horizontalTabsBackup" = "{\"placements\":{\"widget-overflow-fixed-list\":[],\"unified-extensions-area\":[\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"nav-bar\":[\"sidebar-button\",\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"unified-extensions-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"firefox-view-button\",\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"vertical-tabs\":[],\"PersonalToolbar\":[\"import-button\",\"personal-bookmarks\"]},\"seen\":[\"developer-button\",\"screenshot-button\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\",\"vertical-tabs\",\"PersonalToolbar\",\"toolbar-menubar\",\"TabsToolbar\",\"unified-extensions-area\"],\"currentVersion\":23,\"newElementCount\":2}";
-        "browser.uiCustomization.horizontalTabstrip" = "[\"firefox-view-button\",\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"]";
-        "browser.uiCustomization.navBarWhenVerticalTabs" = "[\"sidebar-button\",\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"unified-extensions-button\",\"firefox-view-button\",\"alltabs-button\"]";
-        "browser.uiCustomization.state" = "{\"placements\":{\"widget-overflow-fixed-list\":[],\"unified-extensions-area\":[\"sponsorblocker_ajay_app-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"nav-bar\":[\"sidebar-button\",\"back-button\",\"forward-button\",\"stop-reload-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"unified-extensions-button\",\"firefox-view-button\",\"alltabs-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[],\"vertical-tabs\":[\"tabbrowser-tabs\"],\"PersonalToolbar\":[\"import-button\",\"personal-bookmarks\"]},\"seen\":[\"developer-button\",\"screenshot-button\",\"_57e8684d-5ae8-47d6-93c9-f870ef0e40a3_-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"enhancerforyoutube_maximerf_addons_mozilla_org-browser-action\",\"plasma-browser-integration_kde_org-browser-action\",\"sponsorblocker_ajay_app-browser-action\",\"jid1-kkzogwgsw3ao4q_jetpack-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\",\"vertical-tabs\",\"PersonalToolbar\",\"toolbar-menubar\",\"TabsToolbar\",\"unified-extensions-area\"],\"currentVersion\":23,\"newElementCount\":2}";
-        "browser.urlbar.placeholderName" = "DuckDuckGo";
-        "browser.urlbar.placeholderName.private" = "DuckDuckGo";
-        "browser.urlbar.shortcuts.actions" = false;
-        "browser.urlbar.shortcuts.bookmarks" = false;
-        "browser.urlbar.shortcuts.history" = false;
-        "browser.urlbar.shortcuts.tabs" = false;
-        "browser.urlbar.suggest.bookmark" = false;
-        "browser.urlbar.suggest.engines" = false;
-        "browser.urlbar.suggest.history" = false;
-        "browser.urlbar.suggest.openpage" = false;
-        "dom.forms.autocomplete.formautofill" = true;
-        "dom.security.https_only_mode" = true;
-        "dom.security.https_only_mode_pbm" = true;
-        "extensions.activeThemeID" = "default-theme@mozilla.org";
-        "media.eme.enabled" = true;
-        "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
-        "network.dns.disablePrefetch" = true;
-        "network.http.speculative-parallel-limit" = 0;
-        "network.predictor.enabled" = false;
-        "network.prefetch-next" = false;
-        "permissions.default.camera" = 2;
-        "permissions.default.geo" = 2;
-        "permissions.default.microphone" = 2;
-        "privacy.clearOnShutdown_v2.formdata" = true;
-        "privacy.fingerprintingProtection" = true;
-        "privacy.trackingprotection.enabled" = true;
-        "sidebar.main.tools" = "aichat,syncedtabs,history,bookmarks";
-        "sidebar.revamp" = true;
-        "sidebar.verticalTabs" = true;
-      };
+      extraConfig = builtins.readFile ../../../assets/librefox/user.js;
     };
   };
+
 }
 

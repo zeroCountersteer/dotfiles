@@ -2,8 +2,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/common.nix
-    ../../modules/gpu/M6500.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -14,7 +12,6 @@
     vkd3d
     vulkan-tools
     mangohud
-    vulkan-tools
     vulkan-loader
   ];
 
@@ -54,6 +51,5 @@
     ];
   };
 
-  networking.hostName = "yuki-machine";
   system.stateVersion = "25.05";
 }

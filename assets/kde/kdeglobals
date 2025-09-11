@@ -140,6 +140,11 @@ Splitter State=\x00\x00\x00\xff\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x00\x8c\
 [General]
 ColorSchemeHash=3b0b7b7f6fa70c9f360b5a78837836d8971524f3
 accentColorFromWallpaper=true
+fixed=@monoFont@,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+font=@font@,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+menuFont=@font@,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+smallestReadableFont=@font@,8,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+toolBarFont=@font@,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 
 [KDE]
 AnimationDurationFactor=0
@@ -148,6 +153,7 @@ widgetStyle=Breeze
 [WM]
 activeBackground=227,229,231
 activeBlend=227,229,231
+activeFont=@font@,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 activeForeground=35,38,41
 inactiveBackground=239,240,241
 inactiveBlend=239,240,241

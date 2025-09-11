@@ -15,9 +15,13 @@
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, esp-dev, plasma-manager, ... }:
   let
+    wallpaper = ./assets/wallpapers/02.jpg;
+    font = "IBM Plex Sans";
+    monoFont = "IBM Plex Mono";
     mkSystem = { system, hostname, username, extraModules ? [ ] }:
       nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit wallpaper font monoFont; };
         modules = [
           ./nix/hosts/${hostname}/configuration.nix
           home-manager.nixosModules.home-manager
@@ -27,6 +31,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit wallpaper font monoFont; };
             home-manager.users.${username} = {
               imports = [
                 plasma-manager.homeManagerModules.plasma-manager
@@ -44,16 +49,6 @@
       extraModules = [
         ./nix/modules/common.nix
         ./nix/modules/gpu/M6500.nix
-      ];
-    };
-
-    nixosConfigurations.work-machine = mkSystem {
-      system = "x86_64-linux";
-      hostname = "work-machine";
-      username = "yuki";
-      extraModules = [
-        ./nix/modules/common.nix
-        ./nix/modules/gpu/WorkPC.nix
       ];
     };
   };
