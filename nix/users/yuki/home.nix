@@ -209,9 +209,9 @@ home.packages = with pkgs; [
       selection-text=eff1f5ff
       border=8c8fa1ff
     '';
-    "kdeglobals".source = pkgs.substituteAll {
+    "kdeglobals".source = pkgs.replaceVars {
       src = ../../../assets/kde/kdeglobals;
-      inherit font monoFont;
+      vars = { inherit font monoFont; };
     };
     "kglobalshortcutsrc".source = ../../../assets/kde/kglobalshortcutsrc;
     "ksplashrc".source = ../../../assets/kde/ksplashrc;
