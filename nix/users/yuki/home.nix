@@ -225,6 +225,13 @@ home.packages = with pkgs; [
   programs.plasma = {
     enable = true;
     workspace.wallpaper = wallpaper;
+    fonts = {
+      general.family = font;
+      fixed.family = monoFont;
+      small.family = font;
+      toolbar.family = font;
+      menu.family = font;
+    };
   };
 
   programs.firefox = {
@@ -233,6 +240,7 @@ home.packages = with pkgs; [
     profiles.default = {
       isDefault = true;
       extraConfig = builtins.readFile ../../../assets/librefox/user.js;
+
     };
   };
 
