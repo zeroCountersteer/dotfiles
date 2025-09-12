@@ -71,7 +71,7 @@ popupWidth=558
 [Containments][1][Applets][29][Configuration][Appearance]
 dateDisplayFormat=BelowTime
 dateFormat=longDate
-fontFamily=Noto Sans
+fontFamily=Iosevka
 fontWeight=400
 
 [Containments][1][Applets][29][Configuration][ConfigDialog]

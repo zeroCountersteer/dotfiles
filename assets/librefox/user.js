@@ -117,7 +117,7 @@ user_pref("extensions.webextensions.ExtensionStorageIDB.migrated.uBlock0@raymond
 user_pref("extensions.webextensions.ExtensionStorageIDB.migrated.vpn@proton.ch", true);
 user_pref("extensions.webextensions.ExtensionStorageIDB.migrated.{57e8684d-5ae8-47d6-93c9-f870ef0e40a3}", true);
 user_pref("extensions.webextensions.uuids", "{\"formautofill@mozilla.org\":\"fae8eb46-81c7-4ce2-8a56-1ed93724cb63\",\"newtab@mozilla.org\":\"57cff6db-af25-42ea-afc2-4cad35fff976\",\"pictureinpicture@mozilla.org\":\"af66543c-38a9-4730-9206-d1ead7da5fa1\",\"addons-search-detection@mozilla.com\":\"b99b7f6a-8f0e-4682-a645-0438387b8777\",\"webcompat@mozilla.org\":\"9a310967-e580-48bf-b3e8-4eafebbc122d\",\"default-theme@mozilla.org\":\"abb9d824-b8b3-4fbd-9fad-ef2a298dbbb2\",\"uBlock0@raymondhill.net\":\"9913924e-087b-4a45-ad96-48382207b007\",\"{57e8684d-5ae8-47d6-93c9-f870ef0e40a3}\":\"8ca3eddc-6304-40a5-b21a-ae083f831f17\",\"plasma-browser-integration@kde.org\":\"a5d9858b-c683-4852-8099-505257700d61\",\"sponsorBlocker@ajay.app\":\"bf32196c-7e95-4da4-8486-c9363e185c28\",\"jid1-KKzOGWgsW3Ao4Q@jetpack\":\"ca3e7c2f-db3b-4358-9d63-afc2f0276ba6\",\"vpn@proton.ch\":\"f030bf17-a4bc-4ae6-876e-8558571757c0\"}");
-user_pref("font.name.serif.x-western", "IBM Plex Sans");
+user_pref("font.name.serif.x-western", "Iosevka");
 user_pref("gecko.handlerService.defaultHandlersVersion", 1);
 user_pref("identity.fxaccounts.account.device.name", "yuki’s LibreWolf on yuki-machine");
 user_pref("identity.fxaccounts.account.telemetry.sanitized_uid", "268780c4dd09f8b29485a63f3de13145");

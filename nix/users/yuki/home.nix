@@ -17,7 +17,6 @@ home.packages = with pkgs; [
   thunderbird
   fuzzel
   iosevka-bin
-  ibm-plex
   discord-ptb
   git
   nil
@@ -194,8 +193,7 @@ home.packages = with pkgs; [
     SDL3_DIR = "${pkgs.sdl3}/lib/cmake/SDL3";
   };
 
-  xdg.configFile = {
-    "fuzzel/fuzzel.ini".text = ''
+  xdg.configFile."fuzzel/fuzzel.ini".text = ''
       [main]
       font=${monoFont}:style=Regular:size=12
       prompt=
@@ -210,23 +208,22 @@ home.packages = with pkgs; [
       border=8c8fa1ff
     '';
 
-    "kdeglobals".source = pkgs.replaceVars {
-      src = ../../../assets/kde/kdeglobals;
-      vars = { inherit font monoFont; };
-
-    };
-    "kglobalshortcutsrc".source = ../../../assets/kde/kglobalshortcutsrc;
-    "ksplashrc".source = ../../../assets/kde/ksplashrc;
-    "kwinrc".source = ../../../assets/kde/kwinrc;
-    "plasma-org.kde.plasma.desktop-appletsrc".source = ../../../assets/kde/plasma-org.kde.plasma.desktop-appletsrc;
-    "kded5rc".source = ../../../assets/kde/kded5rc;
-    "powermanagementprofilesrc".source = ../../../assets/kde/powermanagementprofilesrc;
-    "kwalletrc".source = ../../../assets/kde/kwalletrc;
-  };
-
   programs.plasma = {
     enable = true;
     workspace.wallpaper = wallpaper;
+    configFile = {
+      "kdeglobals".source = pkgs.replaceVars {
+        src = ../../../assets/kde/kdeglobals;
+        vars = { inherit font monoFont; };
+      };
+      "kglobalshortcutsrc".source = ../../../assets/kde/kglobalshortcutsrc;
+      "ksplashrc".source = ../../../assets/kde/ksplashrc;
+      "kwinrc".source = ../../../assets/kde/kwinrc;
+      "plasma-org.kde.plasma.desktop-appletsrc".source = ../../../assets/kde/plasma-org.kde.plasma.desktop-appletsrc;
+      "kded5rc".source = ../../../assets/kde/kded5rc;
+      "powermanagementprofilesrc".source = ../../../assets/kde/powermanagementprofilesrc;
+      "kwalletrc".source = ../../../assets/kde/kwalletrc;
+    };
   };
 
   programs.firefox = {

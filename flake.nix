@@ -16,8 +16,8 @@
   outputs = { self, nixpkgs, home-manager, nixos-hardware, esp-dev, plasma-manager, ... }:
   let
     wallpaper = ./assets/wallpapers/02.jpg;
-    font = "IBM Plex Sans";
-    monoFont = "IBM Plex Mono";
+    font = "Iosevka";
+    monoFont = "Iosevka";
     mkSystem = { system, hostname, username, extraModules ? [ ] }:
       nixpkgs.lib.nixosSystem {
         inherit system;
