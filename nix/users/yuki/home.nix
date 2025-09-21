@@ -1,6 +1,8 @@
-{ config, pkgs, wallpaper, font, monoFont, ... }:
+{ config, pkgs, wallpaper, font, monoFont, lib, ... }:
+let
+  kdeAssets = ../../../assets/kde;
+in
 {
-
   home.username = "yuki";
   home.homeDirectory = "/home/yuki";
   home.stateVersion = "25.05";
@@ -8,7 +10,6 @@
   programs.home-manager.enable = true;
 
 home.packages = with pkgs; [
-  github-desktop
   kdePackages.kate
   kdePackages.kiten
   kdePackages.dolphin
@@ -21,6 +22,7 @@ home.packages = with pkgs; [
   discord-ptb
   git
   nil
+  prusa-slicer
   kicad
   kicadAddons.kikit
   freerouting
@@ -194,6 +196,26 @@ home.packages = with pkgs; [
     SDL3_DIR = "${pkgs.sdl3}/lib/cmake/SDL3";
   };
 
+  home.activation.seedKdeConfigs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    set -e
+    mkdir -p "$HOME/.config"
+    for f in \
+      kglobalshortcutsrc \
+      ksplashrc \
+      kwinrc \
+      plasma-org.kde.plasma.desktop-appletsrc \
+      kded5rc \
+      powermanagementprofilesrc \
+      kwalletrc
+    do
+      src="${kdeAssets}/$f"
+      dst="$HOME/.config/$f"
+      if [ -f "$src" ] && [ ! -e "$dst" ]; then
+        install -m 0644 "$src" "$dst"
+      fi
+    done
+  '';
+
   xdg.configFile = {
     "fuzzel/fuzzel.ini".text = ''
       [main]
@@ -210,18 +232,34 @@ home.packages = with pkgs; [
       border=8c8fa1ff
     '';
 
-    "kdeglobals".source = pkgs.replaceVars {
-      src = ../../../assets/kde/kdeglobals;
-      vars = { inherit font monoFont; };
-
-    };
-    "kglobalshortcutsrc".source = ../../../assets/kde/kglobalshortcutsrc;
-    "ksplashrc".source = ../../../assets/kde/ksplashrc;
-    "kwinrc".source = ../../../assets/kde/kwinrc;
-    "plasma-org.kde.plasma.desktop-appletsrc".source = ../../../assets/kde/plasma-org.kde.plasma.desktop-appletsrc;
-    "kded5rc".source = ../../../assets/kde/kded5rc;
-    "powermanagementprofilesrc".source = ../../../assets/kde/powermanagementprofilesrc;
-    "kwalletrc".source = ../../../assets/kde/kwalletrc;
+#       "kglobalshortcutsrc" = {
+#         source = ../../../assets/kde/kglobalshortcutsrc;
+#         force = true;
+#       };
+#       "ksplashrc" = {
+#         source = ../../../assets/kde/ksplashrc;
+#         force = true;
+#       };
+#       "kwinrc" = {
+#         source = ../../../assets/kde/kwinrc;
+#         force = true;
+#       };
+#       "plasma-org.kde.plasma.desktop-appletsrc" = {
+#         source = ../../../assets/kde/plasma-org.kde.plasma.desktop-appletsrc;
+#         force = true;
+#       };
+#       "kded5rc" = {
+#         source = ../../../assets/kde/kded5rc;
+#         force = true;
+#       };
+#       "powermanagementprofilesrc" = {
+#         source = ../../../assets/kde/powermanagementprofilesrc;
+#         force = true;
+#       };
+#       "kwalletrc" = {
+#         source = ../../../assets/kde/kwalletrc;
+#         force = true;
+#       };
   };
 
   programs.plasma = {
@@ -238,6 +276,5 @@ home.packages = with pkgs; [
 
     };
   };
-
 }
 

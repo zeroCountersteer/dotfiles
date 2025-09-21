@@ -8,6 +8,20 @@ in {
     grub.enable = false;
   };
 
+  nix = {
+      settings = {
+          # Cache configuration - optimized for Asia
+          substituters = [
+            "https://mirror.sjtu.edu.cn/nix-channels/store" # Shanghai Jiao Tong University - best for Asia
+            "https://mirrors.ustc.edu.cn/nix-channels/store" # USTC backup mirror
+            "https://cache.nixos.org" # Official global cache
+            "https://nix-community.cachix.org" # Community packages
+            # "https://hyprland.cachix.org"
+            # "https://aseipp-nix-cache.global.ssl.fastly.net"
+          ];
+      };
+  };
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
     automatic = true;
@@ -133,5 +147,7 @@ in {
     systemPackages = with pkgs; [];
   };
 
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
 
 }
