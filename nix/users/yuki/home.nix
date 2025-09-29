@@ -1,7 +1,4 @@
 { config, pkgs, wallpaper, font, monoFont, lib, ... }:
-let
-#   kdeAssets = ../../../assets/kde;
-in
 {
   home.username = "yuki";
   home.homeDirectory = "/home/yuki";
@@ -32,13 +29,8 @@ home.packages = with pkgs; [
   prusa-slicer
   appimage-run
   kicad
-  kicadAddons.kikit
-  kicadaddon-kikit-library
   freerouting
   freecad
-  freecad-assembly3
-  freecad-manipulator
-  freecad-drawing-dimensioning
   diylc
   octaveFull
   qucs-s
@@ -225,28 +217,6 @@ home.packages = with pkgs; [
       border=8c8fa1ff
     '';
   };
-
-#   home.activation.kdeUnsymlink = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
-#     set -eu
-#     cd "$HOME/.config" 2>/dev/null || exit 0
-#     files="kglobalshortcutsrc ksplashrc kwinrc plasma-org.kde.plasma.desktop-appletsrc kded5rc powermanagementprofilesrc kwalletrc"
-#     for f in $files; do
-#       [ -e "$f" ] || continue
-#       if [ -L "$f" ] || [ ! -w "$f" ]; then
-#         ts=$(date +%s)
-#         tmp="$(mktemp)"
-#         cp -aL "$f" "$tmp" 2>/dev/null || true
-#         cp -aL "$f" "$f.bak.$ts" 2>/dev/null || true
-#         rm -f "$f"
-#         if [ -s "$tmp" ]; then
-#           install -m 600 -D "$tmp" "$f"
-#         else
-#           install -m 600 -D /dev/null "$f"
-#         fi
-#         rm -f "$tmp"
-#       fi
-#     done
-#   '';
 
   programs.plasma = {
     enable = true;
