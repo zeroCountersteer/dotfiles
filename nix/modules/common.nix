@@ -67,7 +67,8 @@ in {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
-      pulse.enable = true;
+#       pulse.enable = true;
+      jack.enable = true;
     };
     xserver.xkb = {
       layout = "us,ru";
@@ -77,6 +78,20 @@ in {
 
     dbus.enable = true;
   };
+
+#     services.jack = {
+#     jackd.enable = true;
+#     # support ALSA only programs via ALSA JACK PCM plugin
+#     alsa.enable = false;
+#     # support ALSA only programs via loopback device (supports programs like Steam)
+#     loopback = {
+#       enable = true;
+#       # buffering parameters for dmix device to work with ALSA only semi-professional sound programs
+#       #dmixConfig = ''
+#       #  period_size 2048
+#       #'';
+#     };
+#   };
 
   services.displayManager.sddm = {
     enable = true;
@@ -112,7 +127,7 @@ in {
   };
 
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    konsole
+#     konsole
     oxygen
     plasma-browser-integration
     kdepim-runtime

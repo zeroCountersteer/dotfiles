@@ -1,6 +1,6 @@
 { config, pkgs, wallpaper, font, monoFont, lib, ... }:
 let
-  kdeAssets = ../../../assets/kde;
+#   kdeAssets = ../../../assets/kde;
 in
 {
   home.username = "yuki";
@@ -10,12 +10,19 @@ in
   programs.home-manager.enable = true;
 
 home.packages = with pkgs; [
+  vlc
+  mpv
   kdePackages.kate
   kdePackages.kiten
   kdePackages.dolphin
   kdePackages.kwalletmanager
   qbittorrent
   thunderbird
+  tuxguitar
+  soundfont-fluid
+  soundfont-arachno
+  soundfont-ydp-grand
+  soundfont-generaluser
   fuzzel
   iosevka-bin
   ibm-plex
@@ -23,6 +30,7 @@ home.packages = with pkgs; [
   git
   nil
   prusa-slicer
+  appimage-run
   kicad
   kicadAddons.kikit
   freerouting
@@ -83,6 +91,7 @@ home.packages = with pkgs; [
   sdl3.dev
   sdl3-ttf
   sdl3-image
+  guitarix
 ];
 
   programs.nushell.enable = true;
@@ -196,26 +205,6 @@ home.packages = with pkgs; [
     SDL3_DIR = "${pkgs.sdl3}/lib/cmake/SDL3";
   };
 
-  home.activation.seedKdeConfigs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    set -e
-    mkdir -p "$HOME/.config"
-    for f in \
-      kglobalshortcutsrc \
-      ksplashrc \
-      kwinrc \
-      plasma-org.kde.plasma.desktop-appletsrc \
-      kded5rc \
-      powermanagementprofilesrc \
-      kwalletrc
-    do
-      src="${kdeAssets}/$f"
-      dst="$HOME/.config/$f"
-      if [ -f "$src" ] && [ ! -e "$dst" ]; then
-        install -m 0644 "$src" "$dst"
-      fi
-    done
-  '';
-
   xdg.configFile = {
     "fuzzel/fuzzel.ini".text = ''
       [main]
@@ -231,40 +220,137 @@ home.packages = with pkgs; [
       selection-text=eff1f5ff
       border=8c8fa1ff
     '';
-
-#       "kglobalshortcutsrc" = {
-#         source = ../../../assets/kde/kglobalshortcutsrc;
-#         force = true;
-#       };
-#       "ksplashrc" = {
-#         source = ../../../assets/kde/ksplashrc;
-#         force = true;
-#       };
-#       "kwinrc" = {
-#         source = ../../../assets/kde/kwinrc;
-#         force = true;
-#       };
-#       "plasma-org.kde.plasma.desktop-appletsrc" = {
-#         source = ../../../assets/kde/plasma-org.kde.plasma.desktop-appletsrc;
-#         force = true;
-#       };
-#       "kded5rc" = {
-#         source = ../../../assets/kde/kded5rc;
-#         force = true;
-#       };
-#       "powermanagementprofilesrc" = {
-#         source = ../../../assets/kde/powermanagementprofilesrc;
-#         force = true;
-#       };
-#       "kwalletrc" = {
-#         source = ../../../assets/kde/kwalletrc;
-#         force = true;
-#       };
   };
+
+#   home.activation.kdeUnsymlink = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
+#     set -eu
+#     cd "$HOME/.config" 2>/dev/null || exit 0
+#     files="kglobalshortcutsrc ksplashrc kwinrc plasma-org.kde.plasma.desktop-appletsrc kded5rc powermanagementprofilesrc kwalletrc"
+#     for f in $files; do
+#       [ -e "$f" ] || continue
+#       if [ -L "$f" ] || [ ! -w "$f" ]; then
+#         ts=$(date +%s)
+#         tmp="$(mktemp)"
+#         cp -aL "$f" "$tmp" 2>/dev/null || true
+#         cp -aL "$f" "$f.bak.$ts" 2>/dev/null || true
+#         rm -f "$f"
+#         if [ -s "$tmp" ]; then
+#           install -m 600 -D "$tmp" "$f"
+#         else
+#           install -m 600 -D /dev/null "$f"
+#         fi
+#         rm -f "$tmp"
+#       fi
+#     done
+#   '';
 
   programs.plasma = {
     enable = true;
-    workspace.wallpaper = wallpaper;
+    workspace = {
+      lookAndFeel = "org.kde.breeze.desktop";
+      cursor = {
+        theme = "Bibata-Modern-Ice";
+        size = 24;
+      };
+      iconTheme = "Breeze-Dark";
+      wallpaper = wallpaper;
+    };
+    hotkeys.commands."launch-alacritty" = {
+      name = "Launch alacritty";
+      key = "Meta+Return";
+      command = "alacritty";
+    };
+    hotkeys.commands."launch-fuzzel" = {
+      name = "Launch Fuzzel";
+      key = "Meta+f";
+      command = "fuzzel drun";
+
+    };
+    fonts = {
+      general = {
+        family = "IBM-Plex Sans";
+        pointSize = 10;
+      };
+    };
+    desktop.widgets = [
+      {
+        digitalClock = {
+          position = {
+            horizontal = 100;
+            vertical = 100;
+          };
+          size = {
+            width = 300;
+            height = 100;
+          };
+        };
+      }
+    ];
+
+    powerdevil = {
+      AC = {
+        powerButtonAction = "lockScreen";
+        autoSuspend = {
+          action = "shutDown";
+          idleTimeout = 1000;
+        };
+        turnOffDisplay = {
+          idleTimeout = 1000;
+          idleTimeoutWhenLocked = "immediately";
+        };
+      };
+      battery = {
+        powerButtonAction = "sleep";
+        whenSleepingEnter = "standbyThenHibernate";
+      };
+      lowBattery = {
+        whenLaptopLidClosed = "hibernate";
+      };
+    };
+
+    kscreenlocker = {
+      lockOnResume = true;
+      timeout = 10;
+    };
+
+    #
+    # Some mid-level settings:
+    #
+    shortcuts = {
+      ksmserver = {
+        "Lock Session" = [
+          "Screensaver"
+          "Meta+Ctrl+Alt+L"
+        ];
+      };
+
+      kwin = {
+        "Expose" = "Meta+,";
+        "Switch Window Down" = "Meta+J";
+        "Switch Window Left" = "Meta+H";
+        "Switch Window Right" = "Meta+L";
+        "Switch Window Up" = "Meta+K";
+      };
+    };
+
+    #
+    # Some low-level settings:
+    #
+    configFile = {
+      baloofilerc."Basic Settings"."Indexing-Enabled" = false;
+      kwinrc."org.kde.kdecoration2".ButtonsOnLeft = "SF";
+      kwinrc.Desktops.Number = {
+        value = 8;
+        # Forces kde to not change this value (even through the settings app).
+        immutable = true;
+      };
+      kscreenlockerrc = {
+        Greeter.WallpaperPlugin = "org.kde.potd";
+        # To use nested groups use / as a separator. In the below example,
+        # Provider will be added to [Greeter][Wallpaper][org.kde.potd][General].
+        "Greeter/Wallpaper/org.kde.potd/General".Provider = "bing";
+      };
+    };
   };
 
   programs.firefox = {
@@ -277,4 +363,3 @@ home.packages = with pkgs; [
     };
   };
 }
-
