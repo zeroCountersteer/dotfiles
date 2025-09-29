@@ -33,8 +33,12 @@ home.packages = with pkgs; [
   appimage-run
   kicad
   kicadAddons.kikit
+  kicadaddon-kikit-library
   freerouting
   freecad
+  freecad-assembly3
+  freecad-manipulator
+  freecad-drawing-dimensioning
   diylc
   octaveFull
   qucs-s
