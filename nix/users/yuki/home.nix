@@ -13,6 +13,8 @@ home.packages = with pkgs; [
   kdePackages.kiten
   kdePackages.dolphin
   kdePackages.kwalletmanager
+  kdePackages.marknote
+  planify
   qbittorrent
   thunderbird
   tuxguitar
@@ -226,7 +228,7 @@ home.packages = with pkgs; [
         theme = "Bibata-Modern-Ice";
         size = 24;
       };
-      iconTheme = "Breeze-Dark";
+      #iconTheme = "Breeze-Dark";
       wallpaper = wallpaper;
     };
     hotkeys.commands."launch-alacritty" = {
