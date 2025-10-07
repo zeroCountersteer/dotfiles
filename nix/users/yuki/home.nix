@@ -9,6 +9,10 @@
 home.packages = with pkgs; [
   vlc
   mpv
+  audacity
+  non
+  tonelib-gfx
+  qtractor
   kdePackages.kate
   kdePackages.kiten
   kdePackages.dolphin
@@ -31,6 +35,7 @@ home.packages = with pkgs; [
   prusa-slicer
   appimage-run
   kicad
+  kikit
   freerouting
   freecad
   diylc
