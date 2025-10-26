@@ -1,5 +1,7 @@
 { config, pkgs, wallpaper, font, monoFont, lib, ... }:
-{
+let
+  localWallpaperPath = "${config.xdg.configHome}/wallpapers/current.jpg";
+in {
   home.username = "yuki";
   home.homeDirectory = "/home/yuki";
   home.stateVersion = "25.05";
@@ -225,6 +227,10 @@ home.packages = with pkgs; [
     '';
   };
 
+  home.activation.copyWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.coreutils}/bin/install -Dm644 ${wallpaper} ${localWallpaperPath}
+  '';
+
   programs.plasma = {
     enable = true;
     workspace = {
@@ -234,7 +240,7 @@ home.packages = with pkgs; [
         size = 24;
       };
       #iconTheme = "Breeze-Dark";
-      wallpaper = wallpaper;
+      wallpaper = localWallpaperPath;
     };
     hotkeys.commands."launch-alacritty" = {
       name = "Launch alacritty";
@@ -271,10 +277,7 @@ home.packages = with pkgs; [
     powerdevil = {
       AC = {
         powerButtonAction = "lockScreen";
-        autoSuspend = {
-          action = "shutDown";
-          idleTimeout = 1000;
-        };
+        autoSuspend.enable = false;
         turnOffDisplay = {
           idleTimeout = 1000;
           idleTimeoutWhenLocked = "immediately";
